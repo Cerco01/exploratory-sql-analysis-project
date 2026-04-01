@@ -1,3 +1,45 @@
+-- PLEASE READ THIS BEFORE RUNNING THE EXERCISE;
+
+-- ⚠️ IMPORTANT: This SQL file may crash due to two common issues: comments and missing semicolons.;
+
+-- Suggestions:
+-- 1) Always end each SQL query with a semicolon
+-- 2) Ensure comments are well-formed:
+--    - Use -- for single-line comments only
+--    - Avoid inline comments after queries
+--    - Do not use multi-line comments, as they may break execution;
+
+-- -----------------------------------------------
+-- queries.sql
+-- Complete each mission by writing your SQL query
+-- directly below the corresponding instruction
+-- -----------------------------------------------
+
+-- -----------------------------------------------
+-- NOTA PARA CESAR — Correcciones aplicadas al app.py original
+--
+-- Como siempre, no he podido aguantar y me he metido a investigar por qué daba error el código.
+-- Para mí cada error es una oportunidad para aprender y practicar de cara al mundo laboral.
+-- Estamos aquí para eso, no?
+--
+-- Durante el ejercicio he encontrado dos bugs en app.py. Al acabar los ejercicios
+-- los he corregido y documentado para que los cursos siguientes no pasen
+-- por lo mismo. Espero que os ahorren algún dolor de cabeza. Un abrazo!
+--
+-- FIX 1 — Encoding UTF-8:
+-- Al ejecutar app.py en Windows aparecía el error:
+-- charmap codec error: cannot decode byte 0x8f
+-- Causa: open() usaba el encoding por defecto del sistema operativo (cp1252 en Windows).
+-- Solución: añadir encoding='utf-8' explícitamente en la llamada a open().
+--
+-- FIX 2 — Soporte para sentencias DML (INSERT, UPDATE, DELETE):
+-- pd.read_sql() lanzaba el error:
+-- "This result object does not return rows. It has been closed automatically."
+-- Causa: pd.read_sql() solo maneja SELECT, no sentencias que no devuelven filas.
+-- Solución: detectar el tipo de sentencia en app.py y redirigir DML a engine.begin()
+-- con sqlalchemy.text(), que gestiona transacciones correctamente.
+-- -----------------------------------------------;
+
 SELECT * FROM regions;
 SELECT * FROM species;
 SELECT * FROM climate;
@@ -85,6 +127,6 @@ SELECT id, scientific_name FROM species WHERE scientific_name LIKE '%Cacatu%';
 UPDATE species SET scientific_name = 'Cacatua galerita' WHERE id = 1;
 
 
--- MISSION 15: Busco el id de la observacion de prueba y la elimino con DELETE;
+-- MISSION 15: Busco el id de la observacion de prueba y la elimino con DELETE por observer;
 SELECT id FROM observations WHERE observer = 'obsr_test_axel';
-DELETE FROM observations WHERE id = 501;
+DELETE FROM observations WHERE observer = 'obsr_test_axel';
