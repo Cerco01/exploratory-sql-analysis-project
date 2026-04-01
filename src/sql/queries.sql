@@ -34,10 +34,12 @@
 --
 -- FIX 2 — Soporte para sentencias DML (INSERT, UPDATE, DELETE):
 -- pd.read_sql() lanzaba el error:
--- "This result object does not return rows. It has been closed automatically."
+-- This result object does not return rows. It has been closed automatically.
 -- Causa: pd.read_sql() solo maneja SELECT, no sentencias que no devuelven filas.
 -- Solución: detectar el tipo de sentencia en app.py y redirigir DML a engine.begin()
 -- con sqlalchemy.text(), que gestiona transacciones correctamente.
+
+-- PR enviado al repo original: https://github.com/4GeeksAcademy/exploratory-sql-analysis-project/pull/4
 -- -----------------------------------------------;
 
 SELECT * FROM regions;
